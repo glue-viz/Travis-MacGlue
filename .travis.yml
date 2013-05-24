@@ -9,6 +9,7 @@ install:
    - cd glue-qt
    - $HOME/anaconda/bin/python setup.py install
    - cd ..
-   - $HOME/anaconda/bin/pip install py2app
+   - $HOME/anaconda/bin/pip install py2app mock pyavm
+   - $HOME/anaconda/bin/glue-deps list
 
 script: $HOME/anaconda/bin/py.test glue-qt/glue/core
