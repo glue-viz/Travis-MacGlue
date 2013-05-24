@@ -13,6 +13,8 @@ install:
    - $HOME/anaconda/bin/glue-deps list
 
 script:
+   - $HOME/anaconda/bin/python noshow_test.py
+   - $HOME/anaconda/bin/python show_test.py
    - $HOME/anaconda/bin/py.test glue-qt/glue/core
    - $HOME/anaconda/bin/py.test glue-qt/glue/clients
    - $HOME/anaconda/bin/py.test glue-qt/glue/qt
