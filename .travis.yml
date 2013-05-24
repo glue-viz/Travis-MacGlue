@@ -8,5 +8,14 @@ install:
    - which python
    - echo $PYTHONPATH
    - brew install --verbose pyqt
+   - brew install --verbose gfortran
+   - brew install --verbose pkg-config
+   - easy_install pip
+   - pip install --use-mirrors numpy
+   - pip install --verbose --use-mirrors scipy
+   - pip install --verbose --use-mirrors matplotlib
+   - pip install --verbose --use-mirrors IPython
+   - pip install --verbose --use-mirrors pygments pyzmq mock pytest pyavm cython
+   - pip install --verbose --use-mirrors scikit-image
 
 script: /usr/local/bin/python test.py
