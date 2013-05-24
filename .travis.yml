@@ -5,6 +5,8 @@ install:
    - brew install python
    - export PATH=/user/loca/bin:$PATH
    - export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
+   - which python
+   - echo $PYTHONPATH
    - brew install pyqt
 
-script: python test.py
+script: /usr/local/bin/python test.py
