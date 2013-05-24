@@ -7,6 +7,6 @@ install:
    - export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
    - which python
    - echo $PYTHONPATH
-   - brew install pyqt
+   - ./install_pyqt.sh
 
 script: /usr/local/bin/python test.py
