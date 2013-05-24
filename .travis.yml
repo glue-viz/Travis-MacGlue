@@ -1,0 +1,10 @@
+language: objective-c
+
+install:
+   - brew update
+   - brew install python
+   - export PATH=/user/loca/bin:$PATH
+   - export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
+   - brew install pyqt
+
+script: python test.py
