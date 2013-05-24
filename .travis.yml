@@ -12,4 +12,4 @@ install:
    - $HOME/anaconda/bin/pip install py2app mock pyavm
    - $HOME/anaconda/bin/glue-deps list
 
-script: $HOME/anaconda/bin/py.test glue-qt/glue/core
+script: $HOME/anaconda/bin/py.test glue-qt/glue/
