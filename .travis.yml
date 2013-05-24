@@ -1,7 +1,8 @@
 language: objective-c
 
 before_install:
-   - "export DISPLAY=:99.0"
+   - export PY=$HOME/anaconda/python.app/Contents/MacOS/python
+   - export PATH=$HOME/anaconda/bin:$PATH
 
 install:
    - curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.5.1-MacOSX-x86_64.sh
@@ -10,16 +11,13 @@ install:
    - git submodule init
    - git submodule update
    - cd glue-qt
-   - $HOME/anaconda/bin/python setup.py install
+   - $PY setup.py install
    - cd ..
    - $HOME/anaconda/bin/pip install py2app mock pyavm
    - $HOME/anaconda/bin/glue-deps list
 
 script:
    - open .
-   - $HOME/anaconda/bin/python noshow_test.py
-   - $HOME/anaconda/bin/python show_test.py
-   - $HOME/anaconda/bin/py.test glue-qt/glue/core
-   - $HOME/anaconda/bin/py.test glue-qt/glue/clients
-   - $HOME/anaconda/bin/py.test glue-qt/glue/qt
-   - $HOME/anaconda/bin/py.test glue-qt/glue/tests
+   - $PY noshow_test.py
+   - $PY show_test.py
+   - $PY -m glue.test
