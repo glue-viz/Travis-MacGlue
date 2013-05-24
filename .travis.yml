@@ -11,4 +11,4 @@ install:
    - cd ..
    - $HOME/anaconda/bin/pip install py2app
 
-script: $HOME/anaconda/bin/py.test glue-qt/glue
+script: $HOME/anaconda/bin/py.test glue-qt/glue/core
