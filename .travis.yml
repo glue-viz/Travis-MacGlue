@@ -7,6 +7,6 @@ install:
    - export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
    - which python
    - echo $PYTHONPATH
-   - ./install_pyqt.sh
+   - brew install --verbose pyqt
 
 script: /usr/local/bin/python test.py

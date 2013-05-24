@@ -1,5 +1,8 @@
 #!/bin/sh
 cd ..
+curl -OL http://download.qt-project.org/official_releases/qt/4.8/4.8.4/qt-everywhere-opensource-src-4.8.4.tar.gz
+tar -xvf qt-everywhere-opensource-src-4.8.4.tar.gz
+cd ..
 curl -OL http://sourceforge.net/projects/pyqt/files/sip/sip-4.14.6/sip-4.14.6.tar.gz
 tar -xvf sip-4.14.6.tar.gz
 cd sip-4.14.6
