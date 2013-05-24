@@ -1,0 +1,3 @@
+[submodule "glue-qt"]
+	path = glue-qt
+	url = git://github.com/glue-viz/glue-qt

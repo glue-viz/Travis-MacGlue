@@ -1,21 +1,13 @@
 language: objective-c
 
 install:
-   - brew update
-   - brew install python
-   - export PATH=/user/loca/bin:$PATH
-   - export PYTHONPATH=/usr/local/lib/python:$PYTHONPATH
-   - which python
-   - echo $PYTHONPATH
-   - brew install --verbose pyqt
-   - brew install --verbose gfortran
-   - brew install --verbose pkg-config
-   - easy_install pip
-   - pip install --use-mirrors numpy
-   - pip install --verbose --use-mirrors scipy
-   - pip install --verbose --use-mirrors matplotlib
-   - pip install --verbose --use-mirrors IPython
-   - pip install --verbose --use-mirrors pygments pyzmq mock pytest pyavm cython
-   - pip install --verbose --use-mirrors scikit-image
+   - curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.5.1-MacOSX-x86_64.sh
+   - ./Anaconda-1.5.1-MacOSX-x86_64.sh -b
+   - git submodule init
+   - git submodule update
+   - cd glue-qt
+   - ../anaconda/bin/python setup.py install
+   - cd ..
+   - anaconda/bin/pip install py2app
 
-script: /usr/local/bin/python test.py
+script: anaconda/bin/python -m glue.test
