@@ -1,23 +1,42 @@
 language: objective-c
 
-before_install:
-   - export PY=$HOME/anaconda/python.app/Contents/MacOS/python
-   - export PATH=$HOME/anaconda/bin:$PATH
+env:
+  global:
+  - secure: |-
+      hJ/GuBb+DEdcgmbELI/3d/O3xwimsuHvGIyCnICcwhc/SuVDtlU+Qsyv/X9F
+      eLwKmaXbQVebLlrsTps5WcIpfFqRs0Db/gCClji5tbTZ1rnVk4y+ZP1JSpSs
+      CYSaC6Urh5OJKfX5epOcEAXAdtZnQFBSMQW3IRwiZMnVgXgEMGk=
+  - secure: |-
+      N9rgx+zaE9li40eMVLjtRCc5JU84TnoQaAx0shYHgBlyKeisFnAA7apTdrWl
+      d/7oHx5J492IRriCwD7kbl5epdIIcKgQRq6mTMmk67gml650DR59eGjFx/IP
+      WkDgDmDE/1IYTpzgPj2ND86RF2ldKx1FzkhbfkpZngKnqrcfFB4=
+  - secure: |-
+      mpUekilXb6eppopvy16AoHlt7ToMPc6zOAFb0YbIGp7nI8i1iksTLcNGAtCV
+      4aIpZxgatfnNThY/HdopCEVT5n75pR42hY897nN+LyFhm/NZ4d3HFX7R9mNI
+      7nSOJqkFecWxYmXHtyIETB3aA6CaX8LTnBfqcsr8E7o5B4nL/uU=
+  - secure: |-
+      lSx5KWkUq8AxpwroYBao5ddemxZhPoQWVOpNBqyxWdq5d1eO9dTc6ENE2TY9
+      AFaRH3RZraQm//J472qGAob+QrZCg0dFRy5RNdHvtVyOptR8M1CjCRWl1wjO
+      ipkSNAK8d/Hi/UJh36xKgO+j8Id4VfeYmYEWrLKtrmt1qPgGIqE=
 
-install:
-   - curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.5.1-MacOSX-x86_64.sh
-   - chmod a+x ./Anaconda-1.5.1-MacOSX-x86_64.sh
-   - ./Anaconda-1.5.1-MacOSX-x86_64.sh -b -p $HOME/anaconda
-   - git submodule init
-   - git submodule update
-   - cd glue-qt
-   - $PY setup.py install
-   - cd ..
-   - $HOME/anaconda/bin/pip install py2app mock pyavm
-   - $HOME/anaconda/bin/glue-deps list
+before_install:
+- export PATH=$HOME/anaconda/bin:$PATH
 
 script:
-   - open .
-   - $PY noshow_test.py
-   - $PY show_test.py
-   - $PY -m glue.test
+- python setup.py py2app
+#ugh. py2app misses these
+#- cp $HOME/anaconda/lib/libfreetype.6.dylib dist/Glue.app/Contents/Resources
+#- cp $HOME/anaconda/lib/libpng15.15.dylib dist/Glue.app/Contents/Resources
+- python setup.py upload
+
+install:
+- curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.5.1-MacOSX-x86_64.sh
+- chmod a+x ./Anaconda-1.5.1-MacOSX-x86_64.sh
+- ./Anaconda-1.5.1-MacOSX-x86_64.sh -b -p $HOME/anaconda
+- which python
+- which pip
+- pip install py2app mock pyavm dropbox
+- git clone git://github.com/glue-viz/glue.git
+- cd glue
+- python setup.py install
+- cd ../
