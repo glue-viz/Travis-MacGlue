@@ -59,8 +59,11 @@ def copy_from_anaconda(path, tld):
     ValueError, if the library is not found in anaconda,
     or the target path is above the top-level directory
     """
+    tld = os.path.abspath(tld)
+    path = os.path.abspath(path)
+
     if not path.startswith(tld):
-        raise ValueError("Attempting to copy a file above outside"
+        raise ValueError("Attempting to copy a file outside "
                          "of the top level directory\n"
                          "\tTop Level Directory: %s\n"
                          "\tTarget destination:  %s" % (path, tld))

@@ -10,6 +10,7 @@ from subprocess import check_call, Popen, PIPE
 from glob import glob
 import time
 import shutil
+import os
 
 import py2app.recipes
 import PIL_RECIPE
@@ -104,8 +105,11 @@ class Upload(Command):
         return path
 
     def run(self):
-        check_call('macdeployqt Glue.app -dmg'.split(), cwd='dist')
+        cwd = os.path.abspath('dist')
+        check_call('macdeployqt Glue.app -dmg'.split(), cwd=cwd)
+        print "created DMG"
         self.upload()
+        print "Uploaded"
 
     def upload(self):
         from dbox import put
