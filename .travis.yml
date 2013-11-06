@@ -41,5 +41,6 @@ install:
 - pip install py2app mock pyavm dropbox
 - git clone git://github.com/glue-viz/glue.git
 - cd glue
+- git checkout staging
 - python setup.py install
 - cd ../
