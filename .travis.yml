@@ -24,6 +24,7 @@ before_install:
 
 script:
 - python setup.py py2app
+- python setup.py fix
 #ugh. py2app misses these
 #- cp $HOME/anaconda/lib/libfreetype.6.dylib dist/Glue.app/Contents/Resources
 #- cp $HOME/anaconda/lib/libpng15.15.dylib dist/Glue.app/Contents/Resources

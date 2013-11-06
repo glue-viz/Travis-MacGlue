@@ -105,13 +105,12 @@ class Upload(Command):
 
     def run(self):
         check_call('macdeployqt Glue.app -dmg'.split(), cwd='dist')
-        try:
-            from dbox import put
-            #copy ui files where Glue expects them
-            with open('dist/Glue.dmg') as infile:
-                put(infile, self.file_name())
-        except:
-            print "Upload failed"
+        self.upload()
+
+    def upload(self):
+        from dbox import put
+        with open('dist/Glue.dmg') as infile:
+            put(infile, self.file_name())
 
 cmdclass['upload'] = Upload
 
