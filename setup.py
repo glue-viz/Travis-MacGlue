@@ -15,9 +15,11 @@ import os
 import py2app.recipes
 import PIL_RECIPE
 import ipython_recipe
+import glue_recipe
 
 py2app.recipes.PIL.check = PIL_RECIPE.check
 py2app.recipes.IPython = ipython_recipe
+py2app.recipes.glue = glue_recipe
 
 APP = ['Glue.py']
 DATA_FILES = []
