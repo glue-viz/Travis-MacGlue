@@ -26,8 +26,9 @@ DATA_FILES = []
 cmdclass = {}
 
 OPTIONS = {
+    'matplotlib_backends' : ['Qt4Agg'],
     'argv_emulation': True,
-    'no_chdir': True,
+    'emulate-shell-environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
                  'numpy', 'IPython', 'skimage', 'pyavm'],
     'includes': ['PySide.QtCore', 'PySide.QtGui',
@@ -38,21 +39,25 @@ OPTIONS = {
     'plist': dict(
         CFBundleDocumentTypes=[
             dict(
+                CFBundleTypeRole='Viewer',
                 CFBundleTypeName='Glue Session',
                 CFBundleTypeExtensions=['glu'],
                 CFBundleTypeIconFile='glue_file_icon.icns',
                 LSHandlerRank='Owner'),
             dict(
+                CFBundleTypeRole='Viewer',
                 CFBundleTypeName='Flexible Image Transport System',
                 CFBundleTypeIconFile='glue_file_icon.icns',
                 CFBundleTypeExtensions=['fits', 'fit', 'fts'],
                 ),
             dict(
+                CFBundleTypeRole='Viewer',
                 CFBundleTypeName='VO Table',
                 CFBundleTypeIconFile='glue_file_icon.icns',
                 CFBundleTypeExtensions=['vot'],
                 ),
             dict(
+                CFBundleTypeRole='Viewer',
                 CFBundleTypeName='Comma Separated Value File',
                 CFBundleTypeIconFile='glue_file_icon.icns',
                 CFBundleTypeExtensions=['csv']
