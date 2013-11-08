@@ -28,7 +28,7 @@ cmdclass = {}
 OPTIONS = {
     'matplotlib_backends' : ['Qt4Agg'],
     'argv_emulation': True,
-    'emulate-shell-environment': True,
+    'emulate_shell_environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
                  'numpy', 'IPython', 'skimage', 'pyavm'],
     'includes': ['PySide.QtCore', 'PySide.QtGui',
