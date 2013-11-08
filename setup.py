@@ -26,7 +26,7 @@ DATA_FILES = []
 cmdclass = {}
 
 OPTIONS = {
-    'matplotlib_backends' : ['Qt4Agg'],
+    'matplotlib_backends' : ['qt4agg'],
     'argv_emulation': True,
     'emulate_shell_environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
