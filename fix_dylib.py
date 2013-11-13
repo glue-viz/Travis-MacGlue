@@ -9,6 +9,7 @@ import os
 import subprocess
 import shutil
 
+
 def loader_paths(obj_file):
     """
     Return absolute paths to all shared_library references
@@ -70,7 +71,7 @@ def copy_from_anaconda(path, tld):
     src = find_in_anaconda(path)
     if src is None:
         raise ValueError("Library not found in Anaconda: %s" % path)
-    print 'copy %s to %s' % (src, path)
+    print 'TravisMacGlue: copy %s to %s' % (src, path)
     shutil.copyfile(src, path)
 
 
@@ -99,6 +100,15 @@ def repair_missing_libraries(path, tld):
             continue
 
 
+def copy_nib_file(tld):
+    shutil.rmtree(os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'),
+                  ignore_errors=True)
+    shutil.copytree(os.path.join(os.environ['HOME'], 'anaconda',
+                                 'python.app', 'Contents',
+                                 'Resources', 'qt_menu.nib'),
+                    os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'))
+
+
 def repair(tld):
     """Fix missing shared library references for object files in a directory
 
@@ -115,10 +125,4 @@ def repair(tld):
         for filename in fnmatch.filter(filenames, '*.dylib'):
             path = os.path.join(root, filename)
             repair_missing_libraries(path, tld)
-
-    shutil.rmtree(os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'),
-                  ignore_errors=True)
-    shutil.copytree(os.path.join(os.environ['HOME'], 'anaconda',
-                                 'python.app', 'Contents',
-                                 'Resources', 'qt_menu.nib'),
-                    os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'))
+    copy_nib_file(tld)
