@@ -23,7 +23,7 @@ OPTIONS = {
     'argv_emulation': True,
     'emulate_shell_environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
-                 'numpy', 'IPython', 'skimage', 'pyavm'],
+                 'numpy', 'IPython', 'skimage', 'pyavm', 'h5py', 'pytest'],
     'includes': ['PySide.QtCore', 'PySide.QtGui', 'PySide.QtScript',
                  'PySide.QtUiTools', 'PySide.QtXml', 'PySide.QtSvg'],
     'excludes': ['PyQt4', 'sip', 'TKinter', 'OpenGL'],
