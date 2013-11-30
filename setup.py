@@ -18,15 +18,32 @@ APP = ['Glue.py']
 DATA_FILES = []
 cmdclass = {}
 
+includes = ['PySide.QtCore', 'PySide.QtGui', 'PySide.QtScript',
+            'PySide.QtUiTools', 'PySide.QtXml', 'PySide.QtSvg',
+            'pytest', 'py', '_pytest']
+
+# pytest does a lot of dynamic importing, which py2app doesn't catch.
+# We implicitly list them
+_pytest_mods = ['capture', 'config', 'core', 'doctest', 'genscript',
+                'helpconfig', 'hookspec', 'junitxml', 'main', 'mark',
+                'monkeypatch', 'nose', 'pastebin', 'pdb', 'pytester',
+                'python', 'recwarn', 'resultlog', 'runner', 'skipping',
+                'standalonetemplate', 'terminal', 'tmpdir', 'unittest']
+_pytest_includes = ['_pytest.' + p for p in _pytest_mods]
+
+py_mods = ['apipkg', 'builtin', 'error', 'initconfig', 'std', 'xmlgen']
+py_includes = ['py.' + p for p in py_mods]
+
+includes.extend(_pytest_includes)
+includes.extend(py_includes)
+
 OPTIONS = {
     'matplotlib_backends' : ['qt4agg'],
     'argv_emulation': True,
     'emulate_shell_environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
-                 'numpy', 'IPython', 'skimage', 'pyavm', 'h5py'],
-    'includes': ['PySide.QtCore', 'PySide.QtGui', 'PySide.QtScript',
-                 'PySide.QtUiTools', 'PySide.QtXml', 'PySide.QtSvg',
-                 'pytest'],
+                 'numpy', 'IPython', 'skimage', 'pyavm', 'h5py', 'py'],
+    'includes': includes,
     'excludes': ['PyQt4', 'sip', 'TKinter', 'OpenGL'],
     'iconfile' : 'glue_icon.icns',
     'resources': ['glue_file_icon.icns'],

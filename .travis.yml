@@ -38,7 +38,7 @@ install:
 - which python
 - which pip
 - which macdeployqt
-- pip install py2app mock pyavm dropbox
+- pip install py2app mock pyavm dropbox pytest
 - git clone git://github.com/glue-viz/glue.git
 - cd glue
 - python setup.py install
