@@ -23,7 +23,7 @@ includes = ['PySide.QtCore', 'PySide.QtGui', 'PySide.QtScript',
             'pytest', 'py', '_pytest']
 
 # pytest does a lot of dynamic importing, which py2app doesn't catch.
-# We implicitly list them
+# We explicitly list them
 _pytest_mods = ['capture', 'config', 'core', 'doctest', 'genscript',
                 'helpconfig', 'hookspec', 'junitxml', 'main', 'mark',
                 'monkeypatch', 'nose', 'pastebin', 'pdb', 'pytester',
@@ -96,8 +96,8 @@ class Fix(Command):
                       'lib/python2.7/scipy/weave', ignore_errors=True)
 
     def run(self):
-        from fix_dylib import repair
-        repair('dist/Glue.app')
+        from fix import main
+        main('dist/Glue.app')
         self.trim_packages()
 
 cmdclass['fix'] = Fix
