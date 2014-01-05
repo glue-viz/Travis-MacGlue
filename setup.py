@@ -102,7 +102,7 @@ class Fix(Command):
 
 cmdclass['fix'] = Fix
 
-class Upload(Command):
+class Bundle(Command):
     user_options = []
 
     def initialize_options(self):
@@ -119,22 +119,19 @@ class Upload(Command):
     def file_name(self):
         timestamp = time.strftime('%Y-%m-%d_%H%M%S', time.gmtime())
         hash = self.glue_git_hash()
-        path = '{timestamp}_{hash}.dmg'.format(hash=hash, timestamp=timestamp)
+        branch = os.environ['TRAVIS_BRANCH']
+        path = '{branch}_{timestamp}_{hash}.dmg'.format(hash=hash,
+                                                        timestamp=timestamp,
+                                                        branch=branch)
         return path
 
     def run(self):
         cwd = os.path.abspath('dist')
         check_call('macdeployqt Glue.app -dmg'.split(), cwd=cwd)
-        print "created DMG"
-        self.upload()
-        print "Uploaded"
+        check_call(['rm', '-rf', 'Glue.app'], cwd=cwd)
+        check_call(['mv', 'Glue.dmg', self.file_name()], cwd=cwd)
 
-    def upload(self):
-        from dbox import put
-        with open('dist/Glue.dmg') as infile:
-            put(infile, self.file_name())
-
-cmdclass['upload'] = Upload
+cmdclass['bundle'] = Bundle
 
 
 class BuildGlue(Command):
