@@ -48,3 +48,4 @@ deploy:
 
   on:
     repo: glue-viz/Travis-MacGlue
+    all_branches: true
