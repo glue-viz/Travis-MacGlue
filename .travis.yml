@@ -31,12 +31,14 @@ install:
 - which python
 - which pip
 - which macdeployqt
+- pip install macholib==1.5.1
 - pip install py2app mock pyavm pytest requests plotly
 - git clone git://github.com/glue-viz/glue.git
 - cd glue
 - git checkout $TRAVIS_BRANCH
 - python setup.py install
 - cd ../
+- conda list
 deploy:
   provider: s3
   access_key_id: AKIAI2ERWDHLW3W24X3A
