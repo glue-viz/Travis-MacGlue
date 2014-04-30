@@ -18,11 +18,9 @@ env:
       AFaRH3RZraQm//J472qGAob+QrZCg0dFRy5RNdHvtVyOptR8M1CjCRWl1wjO
       ipkSNAK8d/Hi/UJh36xKgO+j8Id4VfeYmYEWrLKtrmt1qPgGIqE=
 before_install:
-- export PATH=$HOME/anaconda/bin:$PATH
+- export PATH=/Users/travis/.rvm/gems/ruby-1.9.3-p545/bin:$HOME/anaconda/bin:$PATH
 script:
-- python setup.py py2app
-- python setup.py fix
-- python setup.py bundle
+- python setup.py py2app fix bundle
 install:
 - curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.8.0-MacOSX-x86_64.sh
 - chmod a+x ./Anaconda-1.8.0-MacOSX-x86_64.sh
