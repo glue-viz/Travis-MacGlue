@@ -1,26 +1,18 @@
 language: objective-c
+
 env:
   global:
-  - secure: |-
-      hJ/GuBb+DEdcgmbELI/3d/O3xwimsuHvGIyCnICcwhc/SuVDtlU+Qsyv/X9F
-      eLwKmaXbQVebLlrsTps5WcIpfFqRs0Db/gCClji5tbTZ1rnVk4y+ZP1JSpSs
-      CYSaC6Urh5OJKfX5epOcEAXAdtZnQFBSMQW3IRwiZMnVgXgEMGk=
-  - secure: |-
-      N9rgx+zaE9li40eMVLjtRCc5JU84TnoQaAx0shYHgBlyKeisFnAA7apTdrWl
-      d/7oHx5J492IRriCwD7kbl5epdIIcKgQRq6mTMmk67gml650DR59eGjFx/IP
-      WkDgDmDE/1IYTpzgPj2ND86RF2ldKx1FzkhbfkpZngKnqrcfFB4=
-  - secure: |-
-      mpUekilXb6eppopvy16AoHlt7ToMPc6zOAFb0YbIGp7nI8i1iksTLcNGAtCV
-      4aIpZxgatfnNThY/HdopCEVT5n75pR42hY897nN+LyFhm/NZ4d3HFX7R9mNI
-      7nSOJqkFecWxYmXHtyIETB3aA6CaX8LTnBfqcsr8E7o5B4nL/uU=
-  - secure: |-
-      lSx5KWkUq8AxpwroYBao5ddemxZhPoQWVOpNBqyxWdq5d1eO9dTc6ENE2TY9
-      AFaRH3RZraQm//J472qGAob+QrZCg0dFRy5RNdHvtVyOptR8M1CjCRWl1wjO
-      ipkSNAK8d/Hi/UJh36xKgO+j8Id4VfeYmYEWrLKtrmt1qPgGIqE=
+  - AWS_DEFAULT_REGION=us-standard
+  - AWS_ACCESS_KEY_ID=AKIAI2ERWDHLW3W24X3A
+  - secure: "WSqA/RbX5O02CzjX2exYVNfIzgOotMYY+R8aooDTLVL0YePshZ/jj9SPELjCx6alp4xcUYEEPlqrdLznBN2yA/Lxjyjyd0DIHMubF4eiEgnwp9DO/29iLaikScIGKwvVq3yS0ThL4qPzrwQC91cG1EotY2SECFf6oWkmzcbT86g="
+
 before_install:
-- export PATH=/Users/travis/.rvm/gems/ruby-1.9.3-p545/bin:$HOME/anaconda/bin:$PATH
+- export PATH=$HOME/anaconda/bin:$PATH
+
 script:
 - python setup.py py2app fix bundle
+- aws s3 cp dist/*dmg s3://mac.glueviz.org/
+
 install:
 - curl -OL http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.8.0-MacOSX-x86_64.sh
 - chmod a+x ./Anaconda-1.8.0-MacOSX-x86_64.sh
@@ -30,22 +22,10 @@ install:
 - which pip
 - which macdeployqt
 - pip install macholib==1.5.1
-- pip install py2app mock pyavm pytest requests plotly
+- pip install py2app mock pyavm pytest requests plotly awscli
 - git clone git://github.com/glue-viz/glue.git
 - cd glue
 - git checkout $TRAVIS_BRANCH
 - python setup.py install
 - cd ../
 - conda list
-deploy:
-  provider: s3
-  access_key_id: AKIAI2ERWDHLW3W24X3A
-  secret_access_key:
-    secure: hXW91dVVHn4Mf03lcSWBwv+RgdKpfxdSCChRuQ4XwL3qpe1Kf+xRencHeRd6UPGrWwnFA6mZSSwrghKXBxq6MLlLCwI+cUsiF31uoBqMceqfpHoVIVX3HLcMZIPlasmhIvmOFoneniNgB82HRxzoSJi+NT4EJ1e/b8yhkEGex9I=
-  bucket: mac.glueviz.org
-  local-dir: dist
-  skip_cleanup: true
-
-  on:
-    repo: glue-viz/Travis-MacGlue
-    all_branches: true
