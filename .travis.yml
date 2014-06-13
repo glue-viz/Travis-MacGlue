@@ -22,7 +22,7 @@ install:
 - which pip
 - which macdeployqt
 - pip install macholib==1.5.1
-- pip install py2app mock pyavm pytest requests plotly awscli
+- pip install py2app mock pyavm pytest requests plotly awscli==1.3.16
 - git clone git://github.com/glue-viz/glue.git
 - cd glue
 - git checkout $TRAVIS_BRANCH
