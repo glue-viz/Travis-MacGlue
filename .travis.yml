@@ -21,6 +21,7 @@ install:
 - which python
 - which pip
 - which macdeployqt
+- conda install --yes pyside
 - pip install macholib==1.5.1 modulegraph==0.11 py2app==0.7
 - pip install mock pyavm pytest requests plotly awscli==1.3.16
 - git clone git://github.com/glue-viz/glue.git
