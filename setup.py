@@ -51,6 +51,8 @@ OPTIONS = {
     'iconfile' : 'glue_icon.icns',
     'resources': ['glue_file_icon.icns'],
     'plist': dict(
+        NSPrincipalClass="NSApplication",
+        NSHighResolutionCapable=True,
         CFBundleDocumentTypes=[
             dict(
                 CFBundleTypeRole='Viewer',
