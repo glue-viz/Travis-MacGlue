@@ -11,7 +11,7 @@ script:
   - aws s3 cp dist/*dmg s3://mac.glueviz.org/
 
 install:
-  - wget https://repo.continuum.io/miniconda/Miniconda-3.10.1-MacOSX-x86_64.sh
+  - wget https://repo.continuum.io/miniconda/Miniconda-3.10.1-MacOSX-x86_64.sh -O miniconda.sh
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
   - export PATH=/Users/travis/miniconda/bin:$PATH
