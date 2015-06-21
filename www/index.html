@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Glue Mac Applications
+    </title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript">
+</script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css">
+    <style type="text/css">
+ul span {
+        font-size: 22px;
+    }
+    ul {
+        list-style-type: none;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        Glue Mac Applications
+      </h1>
+      <p>
+        This page contains links to Glue applications for Mac OSX.
+      </p>
+      <p>
+        Each file is a build from a specific <a href="https://github.com/glue-viz/glue/commits">Glue commit</a> . The naming scheme is
+      </p>
+      <pre>
+[branch_name]_[date]_[time]_[commit_hash].dmg
+</pre>
+      <p>
+        Please report any errors with these files to <a href="mailto:glueviz%40gmail.com">glueviz@gmail.com</a>
+      </p>
+      <h2>
+        Stable versions
+      </h2>
+      <p>
+        These correspond to major releases, but may not include all the
+        latest features available in the latest developer version.
+      </p>
+      <div id="stable"></div>
+      <h2>
+        Development versions
+      </h2>
+      <p>
+        These are the most recent and will have the latest features, but may
+        be a little buggier.
+      </p>
+
+      <div id="master"></div>
+    </div>
+
+    <script type="text/javascript">
+
+    function getFileList() {
+
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "http://s3.amazonaws.com/mac.glueviz.org", false);
+      xmlhttp.send();
+      var xmlDoc = xmlhttp.responseXML;
+
+      var contents = xmlDoc.getElementsByTagName("Contents");
+      var links = {};
+
+      for (var i = 0; i < contents.length; i++) {
+
+        var path = contents[i].getElementsByTagName('Key')[0].textContent;
+
+        if (path.search(".dmg") === -1) {
+          continue;
+        }
+
+        items = path.split('_');
+
+        branch = items[0];
+
+        if (!(branch in links)) {
+          links[branch] = [];
+        }
+
+        links[branch].push(path)
+
+      }
+
+      return links
+
+    }
+
+    function printFileList(links, list_id) {
+
+      links.sort().reverse();
+
+      var link_html = '<ul>';
+      for (var i = 0; i < links.length; i++) {
+        if (i == 0) {
+          var display = "<b>" + links[i] + " (Latest)</b>";
+        } else {
+          var display = links[i];
+        }
+
+        link_html += '<li><a href="http://s3.amazonaws.com/mac.glueviz.org/' + links[i] + '">' + display + '<\/a><\/li>';
+      }
+      link_html = link_html + '<\/ul>';
+      $(list_id).html(link_html);
+
+    }
+
+    function main() {
+      links = getFileList();
+      printFileList(links['stable'], '#stable');
+      printFileList(links['master'], '#master');
+    }
+
+
+    $(
+      main()
+    );
+
+    </script>
+  </body>
+</html>
