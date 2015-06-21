@@ -23,7 +23,7 @@ ul span {
         Glue Mac Applications
       </h1>
       <p>
-        This page contains links to Glue applications for MAC OSX. You probably want to install the most recent link beginning with "master_".
+        This page contains links to Glue applications for Mac OSX.
       </p>
       <p>
         Each file is a build from a specific <a href="https://github.com/glue-viz/glue/commits">Glue commit</a> . The naming scheme is
@@ -35,45 +35,88 @@ ul span {
         Please report any errors with these files to <a href="mailto:glueviz%40gmail.com">glueviz@gmail.com</a>
       </p>
       <h2>
-        Files
+        Stable versions
       </h2>
-      <div id="links"></div>
+      <p>
+        These correspond to major releases, but may not include all the
+        latest features available in the latest developer version.
+      </p>
+      <div id="stable"></div>
+      <h2>
+        Development versions
+      </h2>
+      <p>
+        These are the most recent and will have the latest features, but may
+        be a little buggier.
+      </p>
+
+      <div id="master"></div>
     </div>
-    
+
     <script type="text/javascript">
 
-    function listDirectory() {
+    function getFileList() {
+
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.open("GET", "http://s3.amazonaws.com/mac.glueviz.org", false);
       xmlhttp.send();
       var xmlDoc = xmlhttp.responseXML;
 
       var contents = xmlDoc.getElementsByTagName("Contents");
-      var links = [];
-      for (var i = 0; i < contents.length; i++) {
-        var path = contents[i].getElementsByTagName('Key')[0].textContent;
+      var links = {};
 
-        if (path.search("master") === -1 && path.search("stable") === -1) {
-          continue;
-        }
+      for (var i = 0; i < contents.length; i++) {
+
+        var path = contents[i].getElementsByTagName('Key')[0].textContent;
 
         if (path.search(".dmg") === -1) {
           continue;
         }
-        links.push('<li><a href="http://s3.amazonaws.com/mac.glueviz.org/' + path + '">' + path + '<\/a><\/li>');
+
+        items = path.split('_');
+
+        branch = items[0];
+
+        if (!(branch in links)) {
+          links[branch] = [];
+        }
+
+        links[branch].push(path)
+
       }
-      links.sort().reverse();
-      links[0] = '<span>' + links[0] + '<\/span>'
-      var link_html = '<ul>';
-      for (var i = 0; i < links.length; i++) {
-        link_html += links[i];
-      }
-      link_html = link_html + '<\/ul>';
-      $('#links').html(link_html);
+
+      return links
+
     }
 
+    function printFileList(links, list_id) {
+
+      links.sort().reverse();
+
+      var link_html = '<ul>';
+      for (var i = 0; i < links.length; i++) {
+        if (i == 0) {
+          var display = "<b>" + links[i] + " (Latest)</b>";
+        } else {
+          var display = links[i];
+        }
+
+        link_html += '<li><a href="http://s3.amazonaws.com/mac.glueviz.org/' + links[i] + '">' + display + '<\/a><\/li>';
+      }
+      link_html = link_html + '<\/ul>';
+      $(list_id).html(link_html);
+
+    }
+
+    function main() {
+      links = getFileList();
+      printFileList(links['stable'], '#stable');
+      printFileList(links['master'], '#master');
+    }
+
+
     $(
-      listDirectory()
+      main()
     );
 
     </script>
