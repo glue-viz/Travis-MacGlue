@@ -12,7 +12,7 @@ script:
 
 before_install:
   # Avoid conflict with system-installed versions of various libraries
-  - sudo rm -rf /usr/local
+  -  brew list
 
 install:
   - wget https://repo.continuum.io/miniconda/Miniconda-3.10.1-MacOSX-x86_64.sh -O miniconda.sh
