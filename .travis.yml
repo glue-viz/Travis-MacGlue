@@ -11,8 +11,10 @@ script:
   - aws s3 cp dist/*dmg s3://mac.glueviz.org/
 
 before_install:
-  # Avoid conflict with system-installed versions of various libraries
-  -  brew list
+  # Avoid conflict with system-installed versions of various libraries by
+  # removing all homebrew packages, then re-installing wget.
+  - brew remove --force $(brew list)
+  - brew install wget
 
 install:
   - wget https://repo.continuum.io/miniconda/Miniconda-3.10.1-MacOSX-x86_64.sh -O miniconda.sh
