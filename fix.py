@@ -127,9 +127,9 @@ def find_sys(pth):
     return _find(pth, '/usr/lib')
 
 
-def find_anaconda(pth):
-    """ Search $HOME/anaconda/lib for a file """
-    return _find(pth, os.path.join(os.environ['HOME'], 'anaconda', 'lib'))
+def find_miniconda(pth):
+    """ Search $HOME/miniconda/lib for a file """
+    return _find(pth, os.path.join(os.environ['HOME'], 'miniconda', 'lib'))
 
 
 def find_app(pth, app):
@@ -185,8 +185,8 @@ def fix_references(app):
             change_install_name(fname, ref, bun)
             continue
 
-        # reference exists in anaconda
-        ana = find_anaconda(refname)
+        # reference exists in miniconda
+        ana = find_miniconda(refname)
         if ana:
             dest = os.path.join(app, 'Contents', 'Resources', refname)
             if os.path.exists(dest):
@@ -206,7 +206,7 @@ def copy_nib_file(tld):
     """ Copy the qt nib file into the application bundle"""
     shutil.rmtree(os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'),
                   ignore_errors=True)
-    shutil.copytree(os.path.join(os.environ['HOME'], 'anaconda',
+    shutil.copytree(os.path.join(os.environ['HOME'], 'miniconda',
                                  'python.app', 'Contents',
                                  'Resources', 'qt_menu.nib'),
                     os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'))
