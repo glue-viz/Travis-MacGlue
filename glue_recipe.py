@@ -40,11 +40,15 @@ def iter_plugin_entry_points():
 """
 
 for package in PACKAGES:
+    print(package)
     dist = pkg_resources.working_set.by_key[package]
     entry_map = dist.get_entry_map()
     for key, entry_points in entry_map.items():
+        print(key, entry_points)
         if key == 'glue.plugins':
+            print("HERE")
             for name, entry_point in entry_points.items():
+                print(name)
                 patch += "    yield EntryPoint('{name}', '{module_name}', attrs={attrs})\n".format(name=name, module_name=entry_point.module_name, attrs=entry_point.attrs)
 
 patch += """
