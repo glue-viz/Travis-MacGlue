@@ -164,11 +164,17 @@ def fix_references(app):
 
     Returns True if the directory was modified, false otherwise
     """
+
+    print("FIX REFERENCES")
     changed = False
     for fname, ref, refpath in iter_references(app):
+
+        print(fname, ref, refpath)
+
         # reference ok
         if check_exists(refpath, app):
             continue
+
         print ref, refpath
 
         _, refname = os.path.split(refpath)
