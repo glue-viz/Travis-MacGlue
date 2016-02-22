@@ -231,7 +231,14 @@ def main(app):
     app = os.path.abspath(app)
     copy_nib_file(app)
 
+    import os
+    print("BEFORE FIX")
+    os.system('otool -L /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO')
+
     # this requires multiple passes, until nothing changes
     do = True
     while do:
         do = fix_references(app)
+
+    print("AFTER FIX")
+    os.system('otool -L /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO')
