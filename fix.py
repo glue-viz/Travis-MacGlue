@@ -96,6 +96,7 @@ def change_install_name(pth, frm, to):
     to : str
       New name
     """
+    print("CHANGE INSTALL NAME FROM", pth, frm, to)
     #XXX better way to disambiguate this: check if this
     #    chould be changed via -id or -change
     if os.path.split(pth)[1] == os.path.split(to)[1]:
@@ -122,6 +123,7 @@ def _find(pth, tld):
 
 def find_sys(pth):
     """ Search some standard shared library locations for a file """
+    print("FIND SYS", pth)
     if '/usr/lib/' + pth not in BASE_SYSTEM:
         return None
     return _find(pth, '/usr/lib')
@@ -129,11 +131,13 @@ def find_sys(pth):
 
 def find_miniconda(pth):
     """ Search $HOME/miniconda/lib for a file """
+    print("FIND_MINICONDA", pth)
     return _find(pth, os.path.join(os.environ['HOME'], 'miniconda', 'lib'))
 
 
 def find_app(pth, app):
     """ Search the app bundle for a file """
+    print("FIND_APP", pth, app)
     result = _find(pth, app)
     if result is None:
         return None
@@ -182,18 +186,21 @@ def fix_references(app):
         # reference exists in base OSX
         sys = find_sys(refname)
         if sys:
+            print("HERE 1")
             change_install_name(fname, ref, sys)
             continue
 
         # reference exists elsewhere in application bundle
         bun = find_app(refname, app)
         if bun:
+            print("HERE2")
             change_install_name(fname, ref, bun)
             continue
 
         # reference exists in miniconda
         ana = find_miniconda(refname)
         if ana:
+            print("HERE3")
             dest = os.path.join(app, 'Contents', 'Resources', refname)
             if os.path.exists(dest):
                 continue
