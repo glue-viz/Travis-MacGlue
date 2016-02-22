@@ -31,3 +31,4 @@ install:
   - cd ../
   - conda list
   - ls $HOME/miniconda/lib
+  - rm -r /System/Library/Frameworks/ImageIO.framework
