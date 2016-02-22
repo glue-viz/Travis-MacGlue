@@ -22,7 +22,7 @@ install:
   - ./miniconda.sh -b
   - export PATH=/Users/travis/miniconda/bin:$PATH
   - conda update --quiet --yes conda
-  - conda install --quiet --yes pip numpy scipy matplotlib pandas astropy pygments pyzmq ipython=4 ipykernel qtconsole scikit-image h5py py requests pytz mock requests pytest pyside
+  - conda install --quiet --yes pip numpy scipy matplotlib pandas astropy pygments pyzmq ipython=4 ipykernel qtconsole scikit-image h5py py requests pytz mock requests pytest pyqt
   - pip install macholib==1.5.1 modulegraph==0.11 py2app==0.7
   - pip install pyavm plotly awscli==1.3.16 astrodendro
   - git clone git://github.com/glue-viz/glue.git
@@ -31,4 +31,3 @@ install:
   - cd ../
   - conda list
   - ls $HOME/miniconda/lib
-  - sudo rm -r /System/Library/Frameworks/ImageIO.framework

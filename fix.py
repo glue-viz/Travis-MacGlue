@@ -227,7 +227,7 @@ def fix_image_io_libraries():
     Use the system ImageIO libraries instead of the conda ones to prevent a
     linking error.
     """
-    for name in ['libGIF', 'libJPEG', 'libTIFF']:
+    for name in ['libGIF', 'libJPEG', 'libTIFF', 'libPng']:
         old = os.path.join(MINICONDA_PATH, 'lib', name + '.dylib')
         new = os.path.join('/', 'System', 'Library', 'Frameworks', 'ImageIO.framework', 'Resources', name + '.dylib')
         replace_file(old, new)
