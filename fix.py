@@ -202,21 +202,44 @@ def fix_references(app):
     return changed
 
 
+def replace_file(old, new, directory=False):
+    print("Replacing {0} with {1}".format(old, new))
+    shutil.rmtree(old, ignore_errors=True)
+    if directory:
+        shutil.copytree(new, old)
+    else:
+        shutil.copy2(new, old)
+
+
+MINICONDA_PATH = os.path.join(os.environ['HOME'], 'miniconda')
+
+
 def copy_nib_file(tld):
     """ Copy the qt nib file into the application bundle"""
-    shutil.rmtree(os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'),
-                  ignore_errors=True)
-    shutil.copytree(os.path.join(os.environ['HOME'], 'miniconda',
-                                 'python.app', 'Contents',
-                                 'Resources', 'qt_menu.nib'),
-                    os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib'))
+    old = os.path.join(tld, 'Contents', 'Resources', 'qt_menu.nib')
+    new = os.path.join(MINICONDA_PATH, 'python.app', 'Contents', 'Resources',
+                       'qt_menu.nib')
+    replace_file(old, new, directory=True)
+
+
+def fix_image_io_libraries():
+    """
+    Use the system ImageIO libraries instead of the conda ones to prevent a
+    linking error.
+    """
+    for name in ['libGIF', 'libJPEG', 'libTIFF', 'libPng']:
+        old = os.path.join(MINICONDA_PATH, 'lib', name + '.dylib')
+        new = os.path.join('/', 'System', 'Library', 'Frameworks', 'ImageIO.framework', 'Resources', name + '.dylib')
+        replace_file(old, new)
 
 
 def main(app):
     if not app.endswith('.app'):
         raise ValueError("Input must be the full path to Glue.app")
     app = os.path.abspath(app)
+
     copy_nib_file(app)
+    fix_image_io_libraries()
 
     # this requires multiple passes, until nothing changes
     do = True
