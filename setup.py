@@ -45,7 +45,7 @@ OPTIONS = {
     'emulate_shell_environment': True,
     'packages': ['zmq', 'glue', 'astropy', 'matplotlib', 'pygments','scipy',
                  'numpy', 'IPython', 'skimage', 'pyavm', 'h5py', 'py',
-                 'plotly', 'requests', 'pytz', 'pkg_resources'],
+                 'plotly', 'requests', 'pytz'],
     'includes': includes,
     'excludes': ['PyQt4', 'sip', 'TKinter', 'OpenGL'],
     'iconfile' : 'glue_icon.icns',

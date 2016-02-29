@@ -1,5 +1,6 @@
 # We have to manually get the entry points and patch them in glue because py2app
-# doesn't support entry points
+# doesn't support entry points. We actually implement a solution that doesn't
+# use entry points or pkg_resources at all.
 
 import pkg_resources
 
@@ -9,7 +10,17 @@ PACKAGES = ['glueviz']
 # list_plugin_entry_points
 
 patch = """
-from pkg_resources import EntryPoint
+import importlib
+
+class EntryPoint(object):
+    def __init__(self, name, module_name, attrs=None):
+        self.name = name
+        self.module_name = module_name
+        self.attrs = attrs
+    def load(self):
+        module = importlib.import_module(self.module_name)
+        function_name = self.attrs[0]
+        return getattr(module, function_name)
 
 def iter_plugin_entry_points():
 """
